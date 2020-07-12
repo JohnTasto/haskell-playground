@@ -1,0 +1,58 @@
+name:                haskell-playground
+version:             0.0.0.1
+github:              "JohnTasto/haskell-playground"
+license:             BSD3
+author:              "John Tasto"
+maintainer:          "john@tasto.net"
+copyright:           "2020 John Tasto"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+# Metadata used when publishing your package
+# synopsis:            Repository of my own notes as a runnable project
+# category:            Uncategorized
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on GitHub at <https://github.com/JohnTasto/haskell-playground#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- random
+
+ghc-options:
+  - -O2
+  - -Wall
+  - -Wcompat
+  - -Wincomplete-record-updates
+  - -Wincomplete-uni-patterns
+  - -Wredundant-constraints
+  # - -Werror
+
+library:
+  source-dirs: src
+
+executables:
+  hangman-exe:
+    main:                Hangman.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - haskell-playground
+
+tests:
+  haskell-playground-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - haskell-playground

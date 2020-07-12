@@ -1,0 +1,66 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 2135e74e9b60095a9115d8e949a10e7700cb6edd551593795559e0e3e5eadab3
+
+name:           haskell-playground
+version:        0.0.0.1
+description:    Please see the README on GitHub at <https://github.com/JohnTasto/haskell-playground#readme>
+homepage:       https://github.com/JohnTasto/haskell-playground#readme
+bug-reports:    https://github.com/JohnTasto/haskell-playground/issues
+author:         John Tasto
+maintainer:     john@tasto.net
+copyright:      2020 John Tasto
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/JohnTasto/haskell-playground
+
+library
+  exposed-modules:
+      Circuit
+  other-modules:
+      Paths_haskell_playground
+  hs-source-dirs:
+      src
+  ghc-options: -O2 -Wall -Wcompat -Wincomplete-record-updates -Wincomplete-uni-patterns -Wredundant-constraints
+  build-depends:
+      base >=4.7 && <5
+    , random
+  default-language: Haskell2010
+
+executable hangman-exe
+  main-is: Hangman.hs
+  other-modules:
+      Paths_haskell_playground
+  hs-source-dirs:
+      app
+  ghc-options: -O2 -Wall -Wcompat -Wincomplete-record-updates -Wincomplete-uni-patterns -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , haskell-playground
+    , random
+  default-language: Haskell2010
+
+test-suite haskell-playground-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_haskell_playground
+  hs-source-dirs:
+      test
+  ghc-options: -O2 -Wall -Wcompat -Wincomplete-record-updates -Wincomplete-uni-patterns -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , haskell-playground
+    , random
+  default-language: Haskell2010
