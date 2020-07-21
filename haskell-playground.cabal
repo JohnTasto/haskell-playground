@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 2135e74e9b60095a9115d8e949a10e7700cb6edd551593795559e0e3e5eadab3
+-- hash: 345e1f41ed2e3577b0ec4468357010902d63888b08740ea068296c19e656673d
 
 name:           haskell-playground
 version:        0.0.0.1
@@ -28,6 +28,40 @@ source-repository head
 library
   exposed-modules:
       Circuit
+      Data.CatenableDeque.CatenableDeque
+      Data.CatenableDeque.ImplicitCatenableDeque
+      Data.CatenableDeque.SimpleCatenableDeque
+      Data.CatenableList.CatenableList
+      Data.CatenableList.CatList
+      Data.Deque.BankersDeque
+      Data.Deque.Deque
+      Data.FiniteMap.FiniteMap
+      Data.FiniteMap.Trie
+      Data.FiniteMap.TrieOfTrees
+      Data.Heap.BinomialHeap
+      Data.Heap.BootstrapHeap
+      Data.Heap.Heap
+      Data.Heap.LazyPairingHeap
+      Data.Heap.LeftistHeap
+      Data.Heap.PairingHeap
+      Data.Heap.SkewBinomialHeap
+      Data.Heap.SplayHeap
+      Data.Queue.BankersQueue
+      Data.Queue.BatchedQueue
+      Data.Queue.BootstrappedQueue
+      Data.Queue.HoodMelvilleQueue
+      Data.Queue.ImplicitQueue
+      Data.Queue.PhysicistsQueue
+      Data.Queue.Queue
+      Data.RandomAccessList.AltBinaryRandomAccessList
+      Data.RandomAccessList.BinaryRandomAccessList
+      Data.RandomAccessList.RandomAccessList
+      Data.RandomAccessList.SkewBinaryRandomAccessList
+      Data.Set.RedBlackSet
+      Data.Set.Set
+      Data.Set.UnbalancedSet
+      Data.Sortable.BottomUpMergeSort
+      Data.Sortable.Sortable
   other-modules:
       Paths_haskell_playground
   hs-source-dirs:
