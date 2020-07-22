@@ -7,22 +7,18 @@ import Data.Heap.Heap
 data SplayHeap a = E | T (SplayHeap a) a (SplayHeap a)
 
 partition :: Ord a => a -> SplayHeap a -> (SplayHeap a, SplayHeap a)
-partition _        E        = (E, E)
-partition pivot t@(T a x b) = if x <= pivot
-  then case b of
-    E -> (t, E)
-    T b1 y b2 -> if y <= pivot
-      then let (small, big) = partition pivot b2
-           in  (T (T a x b) y small, big)
-      else let (small, big) = partition pivot b1
-           in  (T a x small, T big y b2)
-  else case a of
-    E -> (E, t)
-    T a1 y a2 -> if y <= pivot
-      then let (small, big) = partition pivot a2
-           in  (T a1 y small, T big x b)
-      else let (small, big) = partition pivot a1
-           in  (small, T big y (T a2 x b))
+partition _    E        = (E, E)
+partition x t@(T l n r) = if x >= n
+  then case r of
+    E          -> (t, E)
+    T rl rn rr -> if x >= rn
+      then let (rrl, rrr) = partition x rr in (T (T l n rl) rn rrl, rrr)
+      else let (rll, rlr) = partition x rl in (T l n rll, T rlr rn rr)
+  else case l of
+    E          -> (E, t)
+    T ll ln lr -> if x >= ln
+      then let (lrl, lrr) = partition x lr in (T ll ln lrl, T lrr n r)
+      else let (lll, llr) = partition x ll in (lll, T llr ln (T lr n r))
 
 instance Heap SplayHeap where
   empty = E
@@ -30,18 +26,22 @@ instance Heap SplayHeap where
   isEmpty E = True
   isEmpty _ = False
 
-  insert x t = T a x b
-    where (a, b) = partition x t
+  -- O(log n) amortized
+  insert x t = T l x r
+    where (l, r) = partition x t
 
+  -- O(n)
   merge  E        t = t
-  merge (T a x b) t = T (merge ta a) x (merge tb b)
-    where (ta, tb) = partition x t
+  merge (T l n r) t = T (merge tl l) n (merge tr r)
+    where (tl, tr) = partition n t
 
+  -- O(n)
   findMin  E        = error "Empty heap"
-  findMin (T E x _) = x
-  findMin (T a _ _) = findMin a
+  findMin (T E n _) = n
+  findMin (T l _ _) = findMin l
 
-  deleteMin  E                = error "Empty heap"
-  deleteMin (T E _ b)         = b
-  deleteMin (T (T E _ b) y c) = T b y c
-  deleteMin (T (T a x b) y c) = T (deleteMin a) x (T b y c)
+  -- O(log n) amortized
+  deleteMin  E                   = error "Empty heap"
+  deleteMin (T  E           _ r) = r
+  deleteMin (T (T E  _  lr) n r) = T lr n r
+  deleteMin (T (T ll ln lr) n r) = T (deleteMin ll) ln (T lr n r)
