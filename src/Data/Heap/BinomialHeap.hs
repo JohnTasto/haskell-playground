@@ -14,7 +14,7 @@ rank (Node r _ _) = r
 root :: Tree a -> a
 root (Node _ x _) = x
 
--- ranks should be the same
+-- ranks should be the same, but there is no check
 link :: Ord a => Tree a -> Tree a -> Tree a
 link t1@(Node r x1 cs1) t2@(Node _ x2 cs2) = if x1 <= x2
   then Node (r + 1) x1 (t2:cs1)
@@ -47,12 +47,16 @@ instance Heap BinomialHeap where
 
   isEmpty (BH ts) = null ts
 
+  -- O(1) amortized
   insert x (BH ts) = BH (ins (Node 0 x []) ts)
 
+  -- O(log n)
   merge (BH ts1) (BH ts2) = BH (mrg ts1 ts2)
 
+  -- O(log n)
   findMin (BH ts) = root t
     where (t, _) = removeMinTree ts
 
+  -- O(log n)
   deleteMin (BH ts) = BH (mrg (reverse ts1) ts2)
     where (Node _ _ ts1, ts2) = removeMinTree ts

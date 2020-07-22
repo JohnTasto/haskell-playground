@@ -20,12 +20,14 @@ balance color l x r = T color l x r
 instance Ord a => Set RedBlackSet a where
   empty = E
 
+  -- O(log n)
   member _ E    = False
   member x (T _ l n r)
     | x < n     = member x l
     | x > n     = member x r
     | otherwise = True
 
+  -- O(log n)
   insert x s = case ins s of
     T _ l n r -> T B l n r
     E         -> error "Guaranteed to be non-empty"

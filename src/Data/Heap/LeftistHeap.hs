@@ -24,16 +24,20 @@ instance Heap LeftistHeap where
   isEmpty E = True
   isEmpty _ = False
 
+  -- O(log n)
   insert x = merge (T 1 x E E)
 
+  -- O(log n)
   merge l E = l
   merge E r = r
   merge h1@(T _ x1 l1 r1) h2@(T _ x2 l2 r2) = if x1 <= x2
     then makeT x1 l1 (merge r1 h2)
     else makeT x2 l2 (merge h1 r2)
 
+  -- O(1)
   findMin  E          = error "Empty heap"
   findMin (T _ x _ _) = x
 
+  -- O(log n)
   deleteMin  E          = error "Empty heap"
   deleteMin (T _ _ l r) = merge l r
