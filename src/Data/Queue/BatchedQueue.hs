@@ -17,13 +17,13 @@ instance Queue BatchedQueue where
 
   isEmpty (BQ f _) = null f
 
-  -- O(1) amortized
+  -- O(1) amortized ephemeral
   snoc (BQ f r) x = check f (x:r)
 
   -- O(1)
   head (BQ []    _) = error "Empty queue"
-  head (BQ (x:_) _) = x
+  head (BQ (n:_) _) = n
 
-  -- O(1) amortized
+  -- O(1) amortized ephemeral
   tail (BQ []    _) = error "Empty queue"
   tail (BQ (_:f) r) = check f r

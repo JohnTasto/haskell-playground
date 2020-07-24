@@ -4,21 +4,21 @@ module Data.Heap.BinomialHeap (BinomialHeap) where
 
 import Data.Heap.Heap
 
-data Tree a = Node Int a [Tree a]     -- stored in decreasing rank order
+data Tree a = T Int a [Tree a]        -- stored in decreasing rank order
 
 newtype BinomialHeap a = BH [Tree a]  -- stored in increasing rank order
 
 rank :: Tree a -> Int
-rank (Node r _ _) = r
+rank (T r _ _) = r
 
 root :: Tree a -> a
-root (Node _ x _) = x
+root (T _ x _) = x
 
 -- ranks should be the same, but there is no check
 link :: Ord a => Tree a -> Tree a -> Tree a
-link t1@(Node r x1 cs1) t2@(Node _ x2 cs2) = if x1 <= x2
-  then Node (r + 1) x1 (t2:cs1)
-  else Node (r + 1) x2 (t1:cs2)
+link t1@(T r x1 cs1) t2@(T _ x2 cs2) = if x1 <= x2
+  then T (r + 1) x1 (t2:cs1)
+  else T (r + 1) x2 (t1:cs2)
 
 ins :: Ord a => Tree a -> [Tree a] -> [Tree a]
 ins x []         = [x]
@@ -45,18 +45,19 @@ removeMinTree (t:ts) = if root t < root t'
 instance Heap BinomialHeap where
   empty = BH []
 
+  -- O(log n) since lazy? seems unlikely in Haskell with WHNF
   isEmpty (BH ts) = null ts
 
-  -- O(1) amortized
-  insert x (BH ts) = BH (ins (Node 0 x []) ts)
+  -- O(log n), O(1) amortized persistent
+  insert x (BH ts) = BH (ins (T 0 x []) ts)
 
-  -- O(log n)
+  -- O(log n), O(log n) amortized persistent
   merge (BH ts1) (BH ts2) = BH (mrg ts1 ts2)
 
-  -- O(log n)
+  -- O(log n), O(log n) amortized persistent
   findMin (BH ts) = root t
     where (t, _) = removeMinTree ts
 
-  -- O(log n)
+  -- O(log n), O(log n) amortized persistent
   deleteMin (BH ts) = BH (mrg (reverse ts1) ts2)
-    where (Node _ _ ts1, ts2) = removeMinTree ts
+    where (T _ _ ts1, ts2) = removeMinTree ts

@@ -17,16 +17,20 @@ instance Heap PairingHeap where
   isEmpty E = True
   isEmpty _ = False
 
+  -- O(1), O(log n) amortized ephemeral (possibly still O(1))
   insert x = merge (T x [])
 
+  -- O(1), O(log n) amortized ephemeral (possibly still O(1))
   merge h E = h
   merge E h = h
-  merge h1@(T x hs1) h2@(T y hs2) = if x < y
-    then T x (h2:hs1)
-    else T y (h1:hs2)
+  merge h1@(T n1 cs1) h2@(T n2 cs2) = if n1 < n2
+    then T n1 (h2:cs1)
+    else T n2 (h1:cs2)
 
+  -- O(1)
   findMin  E      = error "Empty heap"
-  findMin (T x _) = x
+  findMin (T n _) = n
 
+  -- O(n), O(log n) amortized ephemeral
   deleteMin  E       = error "Empty heap"
-  deleteMin (T _ hs) = mergePairs hs
+  deleteMin (T _ cs) = mergePairs cs

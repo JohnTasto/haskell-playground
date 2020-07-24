@@ -11,12 +11,12 @@ rank E = 0
 rank (T r _ _ _) = r
 
 makeT :: a -> LeftistHeap a -> LeftistHeap a -> LeftistHeap a
-makeT x h1 h2 = if rh1 >= rh2
-  then T (rh2 + 1) x h1 h2
-  else T (rh1 + 1) x h2 h1
+makeT x h1 h2 = if r1 >= r2
+  then T (r2 + 1) x h1 h2
+  else T (r1 + 1) x h2 h1
   where
-    rh1 = rank h1
-    rh2 = rank h2
+    r1 = rank h1
+    r2 = rank h2
 
 instance Heap LeftistHeap where
   empty = E
