@@ -39,7 +39,17 @@ library:
 executables:
   hangman-exe:
     main:                Hangman.hs
-    source-dirs:         app
+    source-dirs:         app/Hangman
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - haskell-playground
+
+  mygmap-exe:
+    main:                MyGMap.hs
+    source-dirs:         app/MyGMap
     ghc-options:
     - -threaded
     - -rtsopts
