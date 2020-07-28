@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 345e1f41ed2e3577b0ec4468357010902d63888b08740ea068296c19e656673d
+-- hash: 7e5ceaf84554ca7d27db37539bc8d814917c54b760d10c221b8b2f116cdb8917
 
 name:           haskell-playground
 version:        0.0.0.1
@@ -62,6 +62,9 @@ library
       Data.Set.UnbalancedSet
       Data.Sortable.BottomUpMergeSort
       Data.Sortable.Sortable
+      GMap
+      KMeans
+      MapString
   other-modules:
       Paths_haskell_playground
   hs-source-dirs:
@@ -69,6 +72,7 @@ library
   ghc-options: -O2 -Wall -Wcompat -Wincomplete-record-updates -Wincomplete-uni-patterns -Wredundant-constraints
   build-depends:
       base >=4.7 && <5
+    , containers
     , random
   default-language: Haskell2010
 
@@ -81,6 +85,7 @@ executable hangman-exe
   ghc-options: -O2 -Wall -Wcompat -Wincomplete-record-updates -Wincomplete-uni-patterns -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , containers
     , haskell-playground
     , random
   default-language: Haskell2010
@@ -95,6 +100,7 @@ test-suite haskell-playground-test
   ghc-options: -O2 -Wall -Wcompat -Wincomplete-record-updates -Wincomplete-uni-patterns -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , containers
     , haskell-playground
     , random
   default-language: Haskell2010
